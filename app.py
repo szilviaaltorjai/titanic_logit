@@ -52,7 +52,7 @@ app.layout = html.Div(children=[
             html.Br(),
         ], className='twelve columns'),
     html.Br(),
-    html.A('Code on Github', href='https://github.com/austinlasseter/knn_iris_plotly'),
+    html.A('Code on Github', href='https://github.com/szilviaaltorjai/titanic_logit'),
     ])
 ])
 
@@ -69,7 +69,7 @@ def radio_results(val0, val1):
     new_observation0=[[val0, val1]]
     prediction=model.predict(new_observation0)
     logodds =prediction[0]
-    return f'The predicted survival by travel class {val0} and age-group {val1} is {logodds} logodds. In probability is exp(logodds)/1+exp(logodds)'
+    return f'The predicted survival by travel class {val0} and age-group {val1} is {logodds} logodds'
 
 
 ############ Deploy
