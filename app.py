@@ -14,10 +14,10 @@ server = app.server
 app.title='titanic_logit'
 
 ########### Read in the model and dataset ######
-file = open('resources/my-titanic-model.pkl', 'rb')
-model=pickle.load(file)
-file.close()
-train=pd.read_pickle('resources/train.pkl')
+#file = open('resources/my_mini_model.pkl', 'rb')
+#model=pickle.load(file)
+#file.close()
+#train=pd.read_pickle('resources/my_mini_data.pkl')
 
 ########### Set up the layout
 
@@ -25,6 +25,7 @@ app.layout = html.Div(children=[
     html.H1('The odds of Titanic survival'),
     html.Div([
         html.Div([
+            html.Div([], className='two columns'),
             html.Div([
                 html.H6('Passenger class'),
                 dcc.Slider(
@@ -36,7 +37,7 @@ app.layout = html.Div(children=[
                     value=2
                 ),
                 html.Br(),
-            ], className='six columns'),
+            ], className='four columns'),
             html.Div([
                 html.H6('Age group'),
                 dcc.Slider(
@@ -48,10 +49,12 @@ app.layout = html.Div(children=[
                     value=3,
                 ),
                 html.Br(),
-            ], className='six columns'),
+            ], className='four columns'),
+            html.Div([], className='two columns'),
             html.Br(),
         ], className='twelve columns'),
     html.Br(),
+    html.Div(id='message', children=''),
     html.A('Code on Github', href='https://github.com/szilviaaltorjai/titanic_logit'),
     ])
 ])
@@ -63,14 +66,20 @@ app.config['suppress_callback_exceptions']=True
 
 # Message callback
 @app.callback(Output('message', 'children'),
-              [Input('slider1', 'value'),
-               Input('slider2', 'value')])
+                [Input('slider1', 'value'),
+                Input('slider2', 'value')
+                ])
 def radio_results(val0, val1):
+    # read in the model
+    file=('resources/my_mini_model.pkl', 'rb')
+    model=pickle.load(file)
+    file.close()
+    # define new observations
     new_observation0=[[val0, val1]]
+    # predict
     prediction=model.predict(new_observation0)
-    logodds =prediction[0]
-    return f'The predicted survival by travel class {val0} and age-group {val1} is {logodds} logodds'
-
+#    logodds =prediction[0]
+    return f'The predicted survival by travel class {val0} and age-group {val1} is {prediction} logodds'
 
 ############ Deploy
 if __name__ == '__main__':
