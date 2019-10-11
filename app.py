@@ -17,7 +17,7 @@ app.title='titanic_logit'
 #file = open('resources/my_mini_model.pkl', 'rb')
 #model=pickle.load(file)
 #file.close()
-#train=pd.read_pickle('resources/my_mini_data.pkl')
+train=pd.read_pickle('resources/my_mini_data.pkl')
 
 ########### Set up the layout
 
@@ -71,7 +71,7 @@ app.config['suppress_callback_exceptions']=True
                 ])
 def radio_results(val0, val1):
     # read in the model
-    file=('resources/my_mini_model.pkl', 'rb')
+    file=open(f'resources/my_mini_model.pkl', 'rb')
     model=pickle.load(file)
     file.close()
     # define new observations
