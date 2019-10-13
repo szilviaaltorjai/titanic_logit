@@ -74,12 +74,14 @@ def radio_results(val0, val1):
     file=open(f'resources/my_mini_model.pkl', 'rb')
     model=pickle.load(file)
     file.close()
-    # define new observations
+    # define new observations from the slide value
     new_observation0=[[val0, val1]]
     # predict
     prediction=model.predict(new_observation0)
+    outcomelist=['died (0)', 'lived (1)']
+    outcome=prediction[0]
 #    logodds =prediction[0]
-    return f'The predicted survival by travel class {val0} and age-group {val1} is {prediction} logodds'
+    return f'The predicted survival by travel class {val0} and age-group {val1} is {outcomelist[outcome]} logodds'
 
 ############ Deploy
 if __name__ == '__main__':
